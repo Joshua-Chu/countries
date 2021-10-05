@@ -6,7 +6,7 @@ export default function Home({ countriesData }) {
 	const { countries, setCountriesHandler } = useCountries();
 	useEffect(() => {
 		setCountriesHandler(countriesData);
-	}, [countriesData, setCountriesHandler]);
+	}, []);
 
 	return (
 		<>
@@ -15,10 +15,10 @@ export default function Home({ countriesData }) {
 			<ul>
 				{countries.length > 0 &&
 					countries.map((country) => (
-						<li key={country.name}>
-							<Link href={`/country/${country.name}`}>
+						<li key={country.name.official}>
+							<Link href={`/country/${country.name.official}`}>
 								<a>
-									{country.name} - {country.alpha3Code}
+									{country.name.official} - {country.cca3}
 								</a>
 							</Link>
 						</li>
@@ -29,7 +29,7 @@ export default function Home({ countriesData }) {
 }
 
 export async function getStaticProps() {
-	const response = await fetch("https://restcountries.com/v2/all");
+	const response = await fetch("https://restcountries.com/v3.1/all");
 	const data = await response.json();
 	return {
 		props: {
