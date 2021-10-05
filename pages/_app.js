@@ -1,7 +1,12 @@
-import '../styles/globals.css'
+import CountiesContextProvider from "../store/CountriesContext";
+import "../styles/globals.css";
 
 function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
+	return (
+		<CountiesContextProvider>
+			<Component {...pageProps} />;
+		</CountiesContextProvider>
+	);
 }
 
-export default MyApp
+export default MyApp;
