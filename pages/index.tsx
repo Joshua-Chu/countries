@@ -1,7 +1,6 @@
 import { Country } from "../types";
-import { Container } from "../styles/util.styles";
-import FilterSection from "../components/FilterSection";
-
+import FilterSection from "../components/FilterSection/FilterSection";
+import Countries from "../components/Countries/Countries";
 type Props = {
 	countries: Array<Country>;
 };
@@ -24,13 +23,7 @@ const Home: React.FC<Props> = ({ countries }) => {
 	return (
 		<>
 			<FilterSection />
-			<Container>
-				<ul>
-					{countries.map((country) => (
-						<li key={country.name.official}>{country.name.official}</li>
-					))}
-				</ul>
-			</Container>
+			<Countries countries={countries} />
 		</>
 	);
 };

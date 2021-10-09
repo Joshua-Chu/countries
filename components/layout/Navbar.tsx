@@ -67,8 +67,9 @@ const Toggler = styled.div`
 	margin: 0;
 	font-weight: 800;
 	font-size: 1.2rem;
-
+	display: flex;
+	align-items: center;
 	@media only screen and (max-width: 639px) {
 		font-size: 0.8rem;
-	} ;
+	}
 `;
