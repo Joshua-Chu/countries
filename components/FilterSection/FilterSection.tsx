@@ -1,7 +1,7 @@
 import Search from "./Search";
 import Categories from "./Categories";
 import styled from "styled-components";
-import { FlexContainer, Section } from "../styles/util.styles";
+import { FlexContainer, Section } from "../../styles/util.styles";
 const FilterSection: React.FC = () => {
 	return (
 		<StyledSection>
