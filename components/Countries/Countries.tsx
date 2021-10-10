@@ -1,6 +1,6 @@
 import { Country } from "../../types";
-import SingleCountry from "./SingleCountry";
-import { Container, FlexContainer, Section } from "../../styles/util.styles";
+import SingleCountryCard from "./SingleCountryCard";
+import { FlexContainer, Section } from "../../styles/util.styles";
 import styled from "styled-components";
 
 type Props = {
@@ -12,10 +12,7 @@ const Countries: React.FC<Props> = ({ countries }) => {
 		<Section>
 			<CountriesContainer>
 				{countries.map((country) => (
-					<SingleCountry
-						key={country.name.official}
-						country={country}
-					/>
+					<SingleCountryCard key={country.name.official} country={country} />
 				))}
 			</CountriesContainer>
 		</Section>

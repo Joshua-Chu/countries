@@ -1,12 +1,16 @@
 import "../styles/globals.js";
 import { GlobalStyles } from "../styles/globals";
+import CountriesProvider from "../store/CountriesContext";
 import NavBar from "../components/layout/Navbar";
+
 function MyApp({ Component, pageProps }) {
 	return (
 		<>
-			<NavBar />
-			<GlobalStyles />
-			<Component {...pageProps} />;
+			<CountriesProvider>
+				<NavBar />
+				<GlobalStyles />
+				<Component {...pageProps} />
+			</CountriesProvider>
 		</>
 	);
 }

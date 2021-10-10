@@ -1,17 +1,27 @@
 import { Country } from "../../types";
 import styled from "styled-components";
 import Image from "next/image";
+import { useRouter } from "next/dist/client/router";
+import { CountryTextDetails } from "../../styles/util.styles";
 type Props = {
 	country: Country;
 };
 
 const SingleCountry: React.FC<Props> = ({ country }) => {
+	const router = useRouter();
 	const flagImage = String(country.flags.png);
+
 	const numberConverter = (num) => {
 		return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 	};
+
+	const routePushHandler = () => {
+		const path = `/country/${country.name.official}`;
+		router.push(path);
+	};
+
 	return (
-		<StyledSingleCountry>
+		<StyledSingleCountry onClick={routePushHandler}>
 			{flagImage && <StyledImage src={flagImage} alt="flag" width={270} height={164} />}
 			<CountryCardDetails>
 				<CountryName>{country.name.official}</CountryName>
@@ -35,9 +45,14 @@ const SingleCountry: React.FC<Props> = ({ country }) => {
 export default SingleCountry;
 
 const StyledSingleCountry = styled.div`
-	/* border: 2px solid yellow; */
 	margin-bottom: 70px;
 	flex-basis: 270px;
+	cursor: pointer;
+	transition: all 0.5s ease;
+
+	&:hover {
+		transform: scale(1.05);
+	}
 `;
 
 const StyledImage = styled(Image)`
@@ -49,7 +64,6 @@ const CountryCardDetails = styled.div`
 	margin-top: -7px;
 	background-color: #2b3743;
 	padding: 30px 20px 30px 20px;
-	/* background-color: #fff; */
 	border-radius: 0 0 5px 5px;
 `;
 
@@ -57,15 +71,4 @@ const CountryName = styled.h5`
 	margin: 0;
 	font-size: 0.7rem;
 	margin-bottom: 15px;
-`;
-
-const CountryTextDetails = styled.span`
-	display: block;
-	margin: 0;
-	font-size: 0.5rem;
-	margin-bottom: 6px;
-
-	span {
-		font-weight: 600;
-	}
 `;
