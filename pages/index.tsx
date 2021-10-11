@@ -1,9 +1,10 @@
-import { Country } from "../types";
 import { GetStaticProps } from "next";
+import { useEffect } from "react";
 import FilterSection from "../components/FilterSection/FilterSection";
 import Countries from "../components/Countries/Countries";
+import { Country } from "../types";
 import { useCountries } from "../store/CountriesContext";
-import { useEffect } from "react";
+
 type Props = {
 	countriesData: Array<Country>;
 };
