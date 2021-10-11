@@ -1,11 +1,11 @@
 import { Country } from "../types";
-
+import FilterSection from "../components/FilterSection/FilterSection";
+import Countries from "../components/Countries/Countries";
 type Props = {
 	countries: Array<Country>;
 };
 
 const Home: React.FC<Props> = ({ countries }) => {
-	console.log(countries);
 	if (!countries)
 		return (
 			<>
@@ -22,13 +22,8 @@ const Home: React.FC<Props> = ({ countries }) => {
 
 	return (
 		<>
-			<h1>Home Page</h1>
-			<h2>Countries Length : {countries.length}</h2>
-			<ul>
-				{countries.map((country) => (
-					<li key={country.name.official}>{country.name.official}</li>
-				))}
-			</ul>
+			<FilterSection />
+			<Countries countries={countries} />
 		</>
 	);
 };
