@@ -5,7 +5,10 @@ import { Country } from "../types";
 export type countriesContextType = {
 	countries: Array<Country>;
 	query: string;
-	filteredCountriesBySearch: (query: string, countries: Array<Country>) => Array<Country>;
+	region: string;
+	setRegionHandler: (reg: string) => void;
+	setQuery: (str: string) => void;
+	filteredCountriesBySearch: (query: string, region: string, countries: Array<Country>) => Array<Country>;
 	debouncedOnChange: () => void;
 	setCountriesHandler: (countries: Array<Country>) => void;
 };
@@ -13,6 +16,9 @@ export type countriesContextType = {
 const countriesContextDefaultValues: countriesContextType = {
 	countries: null,
 	query: "",
+	region: "",
+	setRegionHandler: () => {},
+	setQuery: () => {},
 	filteredCountriesBySearch: () => [],
 	debouncedOnChange: () => {},
 	setCountriesHandler: () => {},
@@ -31,9 +37,15 @@ export type Props = {
 const CountriesProvider: React.FC<Props> = ({ children }) => {
 	const [countries, SetCountries] = useState<Country[]>([]);
 	const [query, setQuery] = useState<string>("");
+	const [region, setRegion] = useState("");
 
 	const setQueryHandler = (e) => {
 		setQuery(() => e?.target?.value);
+	};
+
+	const setRegionHandler = (e) => {
+		console.log("Category", e?.target?.value);
+		setRegion(() => e?.target?.value);
 	};
 
 	const debouncedOnChange = debounce(setQueryHandler, 300);
@@ -42,14 +54,18 @@ const CountriesProvider: React.FC<Props> = ({ children }) => {
 		SetCountries(() => countries);
 	};
 
-	const filteredCountriesBySearch = (query: string, countries: Array<Country>): Array<Country> => {
-		if (query === "") return countries;
+	const filteredCountriesBySearch = (query: string, region: string, countries: Array<Country>): Array<Country> => {
+		if (query.trim() === "" && region === "") return countries;
 		const result = countries.filter((c) => c.name.official.toLowerCase().includes(query.toLowerCase()));
-		return result;
+		if (query.trim() !== "" && region === "") return result;
+		return result.filter((c) => c.region === region);
 	};
 	const value = {
 		countries,
 		query,
+		region,
+		setRegionHandler,
+		setQuery,
 		filteredCountriesBySearch,
 		debouncedOnChange,
 		setCountriesHandler,

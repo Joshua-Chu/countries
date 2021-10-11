@@ -1,13 +1,20 @@
 import styled from "styled-components";
+import { useCountries } from "../../store/CountriesContext";
 const Categories = () => {
+	const { setRegionHandler } = useCountries();
 	const options = ["Africa", "America", "Asia", "Europe", "Oceania"];
 
 	return (
 		<StyledCategories>
-			<StyledSelect name="regionSelection" id="regionSelection" defaultValue={"Filter By Region"}>
+			<StyledSelect
+				name="regionSelection"
+				id="regionSelection"
+				defaultValue={"Filter By Region"}
+				onChange={setRegionHandler}>
 				<option value="Filter By Region" disabled hidden>
 					Filter By Region
 				</option>
+				<option value="">All</option>
 				{options.map((op) => (
 					<option value={op} key={op}>
 						{op}
