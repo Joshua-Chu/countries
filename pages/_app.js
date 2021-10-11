@@ -10,7 +10,18 @@ function MyApp({ Component, pageProps }) {
 	const [isDark, setIsDark] = useState(true);
 	const setIsDarkHandler = () => {
 		setIsDark(() => !isDark);
+		localStorage.setItem("isDark", !isDark);
 	};
+
+	useEffect(() => {
+		console.log("Initial Value", isDark);
+		const isDarkSet = localStorage.getItem("isDark");
+		if (isDarkSet) {
+			setIsDark(Boolean(JSON.parse(isDarkSet)));
+		}
+
+		console.log("After", isDark);
+	}, []);
 
 	return (
 		<>
