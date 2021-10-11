@@ -23,7 +23,7 @@ export const Button = styled.button`
 	cursor: pointer;
 	background-color: #2b3743;
 	border-radius: 5px;
-	padding: 20px 30px;
+	padding: 15px 25px;
 
 	display: flex;
 	justify-content: center;
@@ -46,5 +46,12 @@ export const CountryTextDetails = styled.span`
 
 	span {
 		font-weight: bold;
+	}
+`;
+
+export const StyledCountryTextDetails = styled(CountryTextDetails)`
+	@media only screen and (max-width: 800px) {
+		font-size: 2.5vw;
+		margin: 20px 0;
 	}
 `;

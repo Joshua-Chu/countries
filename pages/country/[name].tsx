@@ -41,6 +41,7 @@ export default CountryDetails;
 
 const ButtonBackContainer = styled(FlexContainer)`
 	margin-top: 80px;
+	padding-left: 20px;
 	justify-content: flex-start;
 `;
 
@@ -58,7 +59,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 const getCountry = async (name) => {
-	const res = await fetch(`https://restcountries.com/v3.1/name/${encodeURIComponent(name)}`);
+	const res = await fetch(`https://restcountries.com/v3.1/name/${name}?fullText=true
+    `);
 
 	const country = await res.json();
 
@@ -66,7 +68,8 @@ const getCountry = async (name) => {
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-	const country = await getCountry(params.name);
+	const encodedParams = encodeURI(params.name as string);
+	const country = await getCountry(encodedParams);
 
 	return {
 		props: {

@@ -11,7 +11,7 @@ const SingleCountry: React.FC<Props> = ({ country }) => {
 	const router = useRouter();
 	const flagImage = String(country.flags.png);
 
-	const numberConverter = (num) => {
+	const numberConverter = (num: Number): string => {
 		return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 	};
 
