@@ -23,6 +23,7 @@ export const Logo = styled.h3`
 `;
 
 export const Toggler = styled.div`
+	cursor: pointer;
 	margin: 0;
 	font-weight: 800;
 	font-size: 1.2rem;

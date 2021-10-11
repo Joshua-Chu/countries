@@ -1,23 +1,24 @@
-import BorderCountries from "../BorderCountry";
-import { Country } from "../../types";
-import styled from "styled-components";
-import { StyledCountryTextDetails } from "../../styles/util.styles";
 import { useCountries } from "../../store/CountriesContext";
 import { useEffect } from "react";
+import BorderCountries from "../BorderCountry";
+import { Country } from "../../types";
+import { StyledCountryTextDetails } from "../../styles/util.styles";
+import { CountryDetailsContainer, CountryName, Details, TextDetails } from "./SingleCountryDetailsPage.styles";
 type Props = {
 	country: Country;
 };
 
+type ObjectFlatterReturn = { name: string; official?: string };
+
 const fetchAllCountries = async () => {
 	const response = await fetch("https://restcountries.com/v3.1/all");
 	const countriesData: Array<Country> = await response.json();
-
 	return countriesData;
 };
 
-type ObjectFlatterReturn = { name: string; official?: string };
 const SingleCountryDetailsPage: React.FC<Props> = ({ country }) => {
-	const { countries, setCountriesHandler } = useCountries();
+	const { countries, setCountriesHandler, numberConverter, generateCommaSeparated, borderMapper } = useCountries();
+
 	useEffect(() => {
 		if (countries.length <= 0) {
 			fetchAllCountries().then((data) => {
@@ -28,30 +29,8 @@ const SingleCountryDetailsPage: React.FC<Props> = ({ country }) => {
 		}
 	}, [countries]);
 
-	const numberConverter = (num: Number): string => {
-		return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-	};
-	const generateCommaSeparated = (obj: Object): string => {
-		if (obj) return Object.values(obj).join(", ");
-	};
-
 	const objectFlatter = (obj: Object): ObjectFlatterReturn => {
 		return Object.values(obj)[0];
-	};
-
-	const borderMapper = (countries, borders) => {
-		if (!borders) return [];
-		if (borders.length === 0) return [];
-
-		const result = borders.reduce((acc, b) => {
-			const target = countries.find((c) => {
-				return c.cca3 === b;
-			});
-
-			return [...acc, { common: target.name.common, official: target.name.official }];
-		}, []);
-
-		return result;
 	};
 
 	if (countries.length <= 0) return <h1>Loading...</h1>;
@@ -102,41 +81,3 @@ const SingleCountryDetailsPage: React.FC<Props> = ({ country }) => {
 };
 
 export default SingleCountryDetailsPage;
-
-const CountryDetailsContainer = styled.div`
-	flex-basis: 50%;
-	padding: 10px 40px 40px 40px;
-	margin-left: 40px;
-
-	@media only screen and (max-width: 800px) {
-		flex-basis: 100%;
-		margin-left: 0px;
-		padding: 10px 0px;
-	}
-`;
-
-const CountryName = styled.h2`
-	margin-bottom: 30px;
-	color: ${(props) => props.theme.fontColor};
-	@media only screen and (max-width: 800px) {
-		font-size: 6vw;
-	}
-`;
-
-const Details = styled.div`
-	display: flex;
-	margin-bottom: 50px;
-
-	@media only screen and (max-width: 800px) {
-		flex-direction: column;
-	}
-`;
-
-const TextDetails = styled.div`
-	flex-basis: 50%;
-	padding-right: 20px;
-	color: ${(props) => props.theme.fontColor};
-	@media only screen and (max-width: 800px) {
-		padding-bottom: 10px;
-	}
-`;
