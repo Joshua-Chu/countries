@@ -41,6 +41,7 @@ const SingleCountryDetailsPage: React.FC<Props> = ({ country }) => {
 	};
 
 	const borderMapper = (countries, borders) => {
+		if (!borders) return [];
 		if (borders.length === 0) return [];
 
 		const result = borders.reduce((acc, b) => {
