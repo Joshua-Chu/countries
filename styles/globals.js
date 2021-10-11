@@ -6,8 +6,8 @@ export const GlobalStyles = createGlobalStyle`
         padding: 0;
         margin: 0;
         font-family: 'Nunito Sans';
-        color: #fff;
-        background-color: #202d36;
+        color: ${(props) => props.fontColor};
+        background-color: ${(props) => props.theme.bg};
     }
 
     a {

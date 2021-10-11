@@ -1,29 +1,17 @@
-import { useEffect, useState } from "react";
 import Link from "next/link";
-
 //Components
 import TogglerIcon from "./TogglerIcon";
 
 // Stylings
 import styled from "styled-components";
 import { FlexContainer } from "../../styles/util.styles";
-const NavBar: React.FC = () => {
-	const [isDark, setIsDark] = useState(true);
 
-	useEffect(() => {
-		const isDarkSet = sessionStorage.getItem("isDark");
-		const isDarkSetBool = Boolean(isDarkSet);
+type Props = {
+	isDark: boolean;
+	onThemeToggle: () => {};
+};
 
-		setIsDark(() => isDarkSetBool);
-	}, []);
-
-	const colorThemeToggler = () => {
-		setIsDark(() => !isDark);
-
-		// can later be extracted to own hook
-		sessionStorage.setItem("isDark", JSON.stringify(isDark));
-	};
-
+const NavBar: React.FC<Props> = ({ isDark, onThemeToggle }) => {
 	return (
 		<Header>
 			<StyledNavBar>
@@ -32,7 +20,7 @@ const NavBar: React.FC = () => {
 						<a>Where in the World?</a>
 					</Link>
 				</Logo>
-				<Toggler onClick={colorThemeToggler}>
+				<Toggler onClick={onThemeToggle}>
 					<TogglerIcon isDark={isDark} />
 
 					<span>{isDark ? "Dark Mode" : "Light Mode"}</span>
@@ -45,8 +33,10 @@ const NavBar: React.FC = () => {
 export default NavBar;
 
 const Header = styled.div`
-	background-color: #2b3743;
+	background-color: ${(props) => props.theme.accent};
+	color: ${(props) => props.theme.fontColor};
 	padding: 0 20px;
+	box-shadow: rgb(0 0 0 / 5%) 0px 3px 2px 0px;
 `;
 const StyledNavBar = styled(FlexContainer)`
 	padding: 30px 0;

@@ -17,11 +17,13 @@ export const Section = styled.div`
 
 export const Button = styled.button`
 	outline: none;
-	border: none;
-	color: #fff;
+	border: 4px solid ${(props) => props.theme.buttonBorder};
+
+	color: ${(props) => props.theme.fontColor};
 	font-size: 1rem;
 	cursor: pointer;
-	background-color: #2b3743;
+	box-shadow: rgb(0 0 0 / 5%) 0px 2px 2px 0px;
+	background-color: ${(props) => props.theme.accent};
 	border-radius: 5px;
 	padding: 15px 25px;
 
@@ -31,7 +33,7 @@ export const Button = styled.button`
 
 	span {
 		padding: 0 10px;
-		fill: #fff;
+		fill: ${(props) => props.theme.fontColor};
 		display: flex;
 		justify-content: center;
 		align-items: center;

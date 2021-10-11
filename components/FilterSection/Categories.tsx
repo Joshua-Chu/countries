@@ -41,8 +41,10 @@ const StyledSelect = styled.select`
 	outline: none;
 	border: none;
 	border-radius: 5px;
-	color: #fff;
-	background-color: #2b3743;
+	color: ${(props) => props.theme.fontColor};
+	background-color: ${(props) => props.theme.accent};
+	box-shadow: rgb(0 0 0 / 5%) 0px 2px 2px 0px;
+
 	cursor: pointer;
 
 	appearance: none;
@@ -57,5 +59,5 @@ const IconContainer = styled.div`
 const Svg = styled.svg`
 	width: 25px;
 	height: 25px;
-	fill: #fff;
+	fill: ${(props) => props.theme.fontColor};
 `;

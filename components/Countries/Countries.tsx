@@ -23,7 +23,7 @@ export default Countries;
 
 const CountriesContainer = styled(FlexContainer)`
 	flex-wrap: wrap;
-	justify-content: space-between;
+	justify-content: center;
 	gap: 35px;
 
 	@media only screen and (max-width: 1200px) {
