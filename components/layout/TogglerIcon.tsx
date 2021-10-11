@@ -48,6 +48,7 @@ export default TogglerIcon;
 
 const Icon = styled.i`
 	padding: 10px;
+	display: flex;
 `;
 
 const Svg = styled.svg`

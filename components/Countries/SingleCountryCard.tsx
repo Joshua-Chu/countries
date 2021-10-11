@@ -53,6 +53,7 @@ const StyledSingleCountry = styled.div`
 	margin-bottom: 70px;
 	cursor: pointer;
 	transition: all 0.5s ease;
+	margin-right: 25px;
 
 	&:hover {
 		transform: scale(1.05);
