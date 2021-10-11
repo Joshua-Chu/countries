@@ -9,7 +9,7 @@ type Props = {
 };
 
 const Home: React.FC<Props> = ({ countriesData }) => {
-	const { countries, setCountriesHandler } = useCountries();
+	const { filteredCountriesBySearch, setCountriesHandler, countries, query } = useCountries();
 
 	useEffect(() => {
 		{
@@ -31,10 +31,12 @@ const Home: React.FC<Props> = ({ countriesData }) => {
 			</>
 		);
 
+	const filteredData = filteredCountriesBySearch(query, countries);
+
 	return (
 		<>
 			<FilterSection />
-			<Countries countries={countries} />
+			<Countries countries={filteredData} />
 		</>
 	);
 };
