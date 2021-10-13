@@ -10,30 +10,13 @@ type Props = {
 
 type ObjectFlatterReturn = { name: string; official?: string };
 
-const fetchAllCountries = async () => {
-	const response = await fetch("https://restcountries.com/v3.1/all");
-	const countriesData: Array<Country> = await response.json();
-	return countriesData;
-};
-
 const SingleCountryDetailsPage: React.FC<Props> = ({ country }) => {
-	const { countries, setCountriesHandler, numberConverter, generateCommaSeparated, borderMapper } = useCountries();
-
-	useEffect(() => {
-		if (countries.length <= 0) {
-			fetchAllCountries().then((data) => {
-				setCountriesHandler(data);
-			});
-		} else {
-			console.log(countries);
-		}
-	}, [countries]);
+	const { countries, numberConverter, generateCommaSeparated, borderMapper } = useCountries();
 
 	const objectFlatter = (obj: Object): ObjectFlatterReturn => {
 		return Object.values(obj)[0];
 	};
 
-	if (countries.length <= 0) return <h1>Loading...</h1>;
 	return (
 		<CountryDetailsContainer>
 			<CountryName>{country.name.official}</CountryName>

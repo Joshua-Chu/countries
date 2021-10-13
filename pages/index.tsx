@@ -4,6 +4,7 @@ import FilterSection from "../components/FilterSection/FilterSection";
 import Countries from "../components/Countries/Countries";
 import { Country } from "../types";
 import { useCountries } from "../store/CountriesContext";
+import Announcement from "../components/Announcement";
 
 type Props = {
 	countriesData: Array<Country>;
@@ -11,6 +12,10 @@ type Props = {
 
 const Home: React.FC<Props> = ({ countriesData }) => {
 	const { filteredCountriesBySearch, setCountriesHandler, countries, query, region } = useCountries();
+
+	const filteredData = filteredCountriesBySearch(query, region, countries).sort((a, b) => {
+		return a.name.official > b.name.official ? 1 : -1;
+	});
 
 	useEffect(() => {
 		{
@@ -20,19 +25,17 @@ const Home: React.FC<Props> = ({ countriesData }) => {
 
 	if (!countries)
 		return (
-			<>
-				<h1>Fetching data...</h1>
-			</>
+			<Announcement>
+				<h3>Fetching Data...</h3>
+			</Announcement>
 		);
 
 	if (countries.length <= 0)
 		return (
-			<>
-				<h1>Currently No Data Available</h1>
-			</>
+			<Announcement>
+				<h3>No data available</h3>
+			</Announcement>
 		);
-
-	const filteredData = filteredCountriesBySearch(query, region, countries);
 
 	return (
 		<>
