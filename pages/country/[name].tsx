@@ -1,9 +1,9 @@
-import SingleCountryPage from "../../components/Countries/SingleCountryPage";
 import { GetStaticPaths, GetStaticProps } from "next";
-import { Country } from "../../types";
-import { Button, FlexContainer, Section } from "../../styles/util.styles";
 import { useRouter } from "next/dist/client/router";
 import { useCountries } from "../../store/CountriesContext";
+import SingleCountryPage from "../../components/Countries/SingleCountryPage";
+import { Country } from "../../types";
+import { Button, FlexContainer, Section } from "../../styles/util.styles";
 import styled from "styled-components";
 
 type Props = {

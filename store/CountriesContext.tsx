@@ -6,6 +6,9 @@ export type countriesContextType = {
 	countries: Array<Country>;
 	query: string;
 	region: string;
+	borderMapper: (countries: Array<Country>, borders: string[]) => { common: string; official: string }[];
+	generateCommaSeparated: (obj: Object) => string;
+	numberConverter: (num: number) => string;
 	setRegionHandler: (reg: string) => void;
 	setQuery: (str: string) => void;
 	filteredCountriesBySearch: (query: string, region: string, countries: Array<Country>) => Array<Country>;
@@ -17,6 +20,9 @@ const countriesContextDefaultValues: countriesContextType = {
 	countries: null,
 	query: "",
 	region: "",
+	borderMapper: () => [],
+	generateCommaSeparated: () => "",
+	numberConverter: () => "",
 	setRegionHandler: () => {},
 	setQuery: () => {},
 	filteredCountriesBySearch: () => [],
@@ -59,10 +65,34 @@ const CountriesProvider: React.FC<Props> = ({ children }) => {
 		if (query.trim() !== "" && region === "") return result;
 		return result.filter((c) => c.region === region);
 	};
+
+	const numberConverter = (num: Number): string => {
+		return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	};
+	const generateCommaSeparated = (obj: Object): string => {
+		if (obj) return Object.values(obj).join(", ");
+	};
+	const borderMapper = (countries: Array<Country>, borders: string[]): { common: string; official: string }[] => {
+		if (!borders) return [];
+		if (borders.length === 0) return [];
+
+		const result = borders.reduce((acc, b) => {
+			const target = countries.find((c) => {
+				return c.cca3 === b;
+			});
+
+			return [...acc, { common: target.name.common, official: target.name.official }];
+		}, []);
+
+		return result;
+	};
 	const value = {
 		countries,
 		query,
 		region,
+		borderMapper,
+		numberConverter,
+		generateCommaSeparated,
 		setRegionHandler,
 		setQuery,
 		filteredCountriesBySearch,
