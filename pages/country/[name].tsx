@@ -3,6 +3,7 @@ import { GetStaticPaths, GetStaticProps } from "next";
 import { Country } from "../../types";
 import { Button, FlexContainer, Section } from "../../styles/util.styles";
 import { useRouter } from "next/dist/client/router";
+import { useCountries } from "../../store/CountriesContext";
 import styled from "styled-components";
 
 type Props = {
@@ -11,7 +12,9 @@ type Props = {
 
 const CountryDetails: React.FC<Props> = ({ country }) => {
 	const router = useRouter();
+	const { setQuery } = useCountries();
 	const pushToHomepage = () => {
+		setQuery("");
 		router.push("/");
 	};
 	return (
@@ -61,9 +64,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 const getCountry = async (name) => {
 	const res = await fetch(`https://restcountries.com/v3.1/name/${name}?fullText=true
     `);
-
 	const country = await res.json();
-
 	return country;
 };
 

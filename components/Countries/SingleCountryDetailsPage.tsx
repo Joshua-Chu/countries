@@ -22,7 +22,6 @@ const SingleCountryDetailsPage: React.FC<Props> = ({ country }) => {
 		if (countries.length <= 0) {
 			fetchAllCountries().then((data) => {
 				setCountriesHandler(data);
-				borderMapper(data, country.borders);
 			});
 		} else {
 			console.log(countries);
