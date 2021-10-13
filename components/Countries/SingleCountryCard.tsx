@@ -1,18 +1,32 @@
 import { Country } from "../../types";
 import styled from "styled-components";
 import Image from "next/image";
+import { useRouter } from "next/dist/client/router";
+import { CountryTextDetails } from "../../styles/util.styles";
 type Props = {
 	country: Country;
 };
 
 const SingleCountry: React.FC<Props> = ({ country }) => {
-	const flagImage = String(country.flags.png);
-	const numberConverter = (num) => {
+	const router = useRouter();
+	const flagImage = String(country.flags.svg);
+
+	const numberConverter = (num: Number): string => {
 		return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 	};
+
+	const routePushHandler = () => {
+		const path = `/country/${country.name.official}`;
+		router.push(path);
+	};
+
 	return (
-		<StyledSingleCountry>
-			{flagImage && <StyledImage src={flagImage} alt="flag" width={270} height={164} />}
+		<StyledSingleCountry onClick={routePushHandler}>
+			<CountryFlagContainer>
+				{flagImage && (
+					<StyledImage src={flagImage} alt="flag" layout="fill" className="image" objectFit="cover" />
+				)}
+			</CountryFlagContainer>
 			<CountryCardDetails>
 				<CountryName>{country.name.official}</CountryName>
 				<CountryTextDetails>
@@ -35,22 +49,35 @@ const SingleCountry: React.FC<Props> = ({ country }) => {
 export default SingleCountry;
 
 const StyledSingleCountry = styled.div`
-	/* border: 2px solid yellow; */
-	margin-bottom: 70px;
 	flex-basis: 270px;
+	margin-bottom: 70px;
+	cursor: pointer;
+	transition: all 0.5s ease;
+
+	&:hover {
+		transform: scale(1.05);
+	}
+
+	@media only screen and (max-width: 620px) {
+		flex-basis: 80%;
+		min-width: 250px;
+	}
 `;
 
 const StyledImage = styled(Image)`
 	border-radius: 5px 5px 0 0;
+	height: 100%;
 `;
 
 const CountryCardDetails = styled.div`
 	height: 176px;
-	margin-top: -7px;
 	background-color: #2b3743;
 	padding: 30px 20px 30px 20px;
-	/* background-color: #fff; */
 	border-radius: 0 0 5px 5px;
+
+	@media only screen and (max-width: 620px) {
+		height: 230px;
+	}
 `;
 
 const CountryName = styled.h5`
@@ -59,13 +86,13 @@ const CountryName = styled.h5`
 	margin-bottom: 15px;
 `;
 
-const CountryTextDetails = styled.span`
-	display: block;
-	margin: 0;
-	font-size: 0.5rem;
-	margin-bottom: 6px;
+const CountryFlagContainer = styled.div`
+	position: relative;
+	width: 270px;
+	height: 162px;
 
-	span {
-		font-weight: 600;
+	@media only screen and (max-width: 620px) {
+		width: 100%;
+		height: 300px;
 	}
 `;

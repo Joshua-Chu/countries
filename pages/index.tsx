@@ -1,11 +1,22 @@
 import { Country } from "../types";
+import { GetStaticProps } from "next";
 import FilterSection from "../components/FilterSection/FilterSection";
 import Countries from "../components/Countries/Countries";
+import { useCountries } from "../store/CountriesContext";
+import { useEffect } from "react";
 type Props = {
-	countries: Array<Country>;
+	countriesData: Array<Country>;
 };
 
-const Home: React.FC<Props> = ({ countries }) => {
+const Home: React.FC<Props> = ({ countriesData }) => {
+	const { countries, setCountriesHandler } = useCountries();
+
+	useEffect(() => {
+		{
+			countriesData && setCountriesHandler(countriesData);
+		}
+	}, []);
+
 	if (!countries)
 		return (
 			<>
@@ -30,12 +41,12 @@ const Home: React.FC<Props> = ({ countries }) => {
 
 export default Home;
 
-export async function getStaticProps() {
+export const getStaticProps: GetStaticProps = async () => {
 	const response = await fetch("https://restcountries.com/v3.1/all");
-	const countries: Array<Country> = await response.json();
+	const countriesData: Array<Country> = await response.json();
 	return {
 		props: {
-			countries,
+			countriesData,
 		},
 	};
-}
+};
