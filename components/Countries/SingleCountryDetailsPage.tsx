@@ -117,7 +117,7 @@ const CountryDetailsContainer = styled.div`
 
 const CountryName = styled.h2`
 	margin-bottom: 30px;
-
+	color: ${(props) => props.theme.fontColor};
 	@media only screen and (max-width: 800px) {
 		font-size: 6vw;
 	}
@@ -135,7 +135,7 @@ const Details = styled.div`
 const TextDetails = styled.div`
 	flex-basis: 50%;
 	padding-right: 20px;
-
+	color: ${(props) => props.theme.fontColor};
 	@media only screen and (max-width: 800px) {
 		padding-bottom: 10px;
 	}

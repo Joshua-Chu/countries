@@ -44,7 +44,6 @@ const CountriesProvider: React.FC<Props> = ({ children }) => {
 	};
 
 	const setRegionHandler = (e) => {
-		console.log("Category", e?.target?.value);
 		setRegion(() => e?.target?.value);
 	};
 

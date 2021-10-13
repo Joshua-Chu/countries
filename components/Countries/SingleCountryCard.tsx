@@ -54,6 +54,7 @@ const StyledSingleCountry = styled.div`
 	cursor: pointer;
 	transition: all 0.5s ease;
 	margin-right: 25px;
+	box-shadow: rgb(0 0 0 / 5%) 0px 3px 8px 0px;
 
 	&:hover {
 		transform: scale(1.05);
@@ -72,7 +73,8 @@ const StyledImage = styled(Image)`
 
 const CountryCardDetails = styled.div`
 	height: 200px;
-	background-color: #2b3743;
+	background-color: ${(props) => props.theme.accent};
+	color: ${(props) => props.theme.fontColor};
 	padding: 30px 20px 30px 20px;
 	border-radius: 0 0 5px 5px;
 
